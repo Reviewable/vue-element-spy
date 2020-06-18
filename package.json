@@ -1,0 +1,21 @@
+{
+  "name": "vue-element-spy",
+  "version": "0.1.3",
+  "scripts": {
+    "build": "rollup -c rollup.config.js"
+  },
+  "main": "dist/vue-element-spy.umd.js",
+  "module": "dist/vue-element-spy.esm.js",
+  "unpkg": "dist/vue-element-spy.js",
+  "files": [
+    "dist/vue-element-spy.umd.js",
+    "dist/vue-element-spy.esm.js",
+    "dist/vue-element-spy.js"
+  ],
+  "devDependencies": {
+    "@rollup/plugin-buble": "^0.21.3",
+    "@rollup/plugin-commonjs": "^11.1.0",
+    "rollup": "^1.17.0"
+  },
+  "license": "MIT"
+}
