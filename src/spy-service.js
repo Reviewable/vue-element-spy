@@ -1,5 +1,5 @@
 const defaultConfig = {
-  greedy: true,
+  watchExit: false,
   offset: 0
 };
 
@@ -7,10 +7,13 @@ class SpyService {
   constructor() {
     this.refreshInterval = 250;
     this.refreshIntervalId = undefined;
+    
+    this.globalContextKey = Symbol('global');
+    this.noContextKey = Symbol('noContext');
 
-    this.contextsList = new Map();
-    this.contextsList.set('global', []);
-    this.contextsList.set('outOfContext', []);
+    this.contexts = new Map();
+    this.contexts.set(this.globalContextKey, []);
+    this.contexts.set(this.noContextKey, []);
   }
 
   setOptions(options) {
@@ -19,41 +22,54 @@ class SpyService {
     }
   }
 
-  getContext(val) {
-    return this.contextsList.get(val);
+  getContext(key) {
+    if (key && typeof key === 'string') {
+      if (!this.contexts.has(key)) this._createContext(key);
+
+      return this.contexts.get(key);
+    } else if (key === false) {
+      return this.contexts.get(this.noContextKey);
+    }
+    return this.contexts.get(this.globalContextKey);
   }
 
-  createContext(el) {
-    this.contextsList.set(el, []);
+  _createContext(key) {
+    this.contexts.set(key, []);
   }
 
-  deleteContext(el) {
-    this.contextsList.delete(el);
+  _deleteContext(key) {
+    if (key === this.noContextKey || key === this.globalContextKey) return;
+    this.contexts.delete(key);
+  }
+
+  removeTarget(key, target) {
+    const context = this.contexts.get(key);
+    context.splice(context.indexOf(target), 1);
+    if (!context.length) this._deleteContext(key);
   }
 
   findContextAndTarget(el) {
-    let target;
-  
-    let context;
-    for (const items of this.contextsList.values()) {
+    let target, contextKey;
+
+    for (const [key, items] of this.contexts.entries()) {
       target = items.find(item => item.el === el);
       if (target) {
-        context = items;
+        contextKey = key;
         break;
       }
     }
-  
-    return {context, target};
+
+    return {contextKey, target};
   }
 
   _checkTargets() {
-    this.contextsList.forEach((value, key) => {
-      if (key === 'outOfContext') {
+    this.contexts.forEach((value, key) => {
+      if (key === this.noContextKey) {
         value.forEach(item => {
           const domRect = item.el.getBoundingClientRect();
 
           let active = domRect.top <= item.config.offset;
-          if (!item.config.greedy) {
+          if (item.config.watchExit) {
             active = active && item.config.offset - domRect.top < domRect.height;
           }
 
@@ -74,7 +90,7 @@ class SpyService {
       const domRect = item.el.getBoundingClientRect();
 
       let active = domRect.top <= item.config.offset;
-      if (!item.config.greedy) {
+      if (item.config.watchExit) {
         active = active && item.config.offset - domRect.top < domRect.height;
       }
 
@@ -109,8 +125,8 @@ class SpyService {
   }
 
   resetRefreshInterval() {
-    if (!this.refreshIntervalId || this.contextsList.size > 2 ||
-        this.contextsList.get('global').length || this.contextsList.get('outOfContext').length) return;
+    if (!this.refreshIntervalId || this.contexts.size > 2 ||
+        this.contexts.get(this.noContextKey).length || this.contexts.get(this.globalContextKey).length) return;
     clearInterval(this.refreshIntervalId);
     this.refreshIntervalId = null;
   }
