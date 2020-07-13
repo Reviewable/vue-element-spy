@@ -1,0 +1,34 @@
+{
+  "name": "vue-element-spy",
+  "description": "Vue.js plugin for detecting when element reaches top of the viewport. The plugin uses Intersection Observer.",
+  "version": "2.0.0",
+  "scripts": {
+    "build": "rollup -c rollup.config.js"
+  },
+  "main": "dist/vue-element-spy.umd.js",
+  "module": "dist/vue-element-spy.esm.js",
+  "unpkg": "dist/vue-element-spy.js",
+  "files": [
+    "dist/vue-element-spy.umd.js",
+    "dist/vue-element-spy.esm.js",
+    "dist/vue-element-spy.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Reviewable/vue-element-spy.git"
+  },
+  "homepage": "https://github.com/Reviewable/vue-element-spy#readme",
+  "dependencies": {
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@rollup/plugin-buble": "^0.21.3",
+    "@rollup/plugin-commonjs": "^11.1.0",
+    "rollup": "^1.17.0"
+  },
+  "keywords": [
+    "Vue",
+    "IntersectionObserver"
+  ],
+  "license": "MIT"
+}
