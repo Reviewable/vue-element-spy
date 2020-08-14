@@ -61,9 +61,9 @@ const vueElementSpy = {
   unbind(el) {
     const {contextKey, target} = spyService.findContextAndTarget(el);
 
-    target.topObserver.disconnect();
+    if (target.topObserver) target.topObserver.disconnect();
     if (target.bottomObserver) target.bottomObserver.disconnect();
-    target.anchor.remove();
+    if (target.anchor) target.anchor.remove();
 
     spyService.removeTarget(contextKey, target);
 
