@@ -1,7 +1,7 @@
 {
-  "name": "vue-element-spy-temp",
+  "name": "vue-element-spy",
   "description": "Vue.js plugin for detecting when element reaches top of the viewport. The plugin uses Intersection Observer.",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "scripts": {
     "build": "rollup -c rollup.config.js"
   },
