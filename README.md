@@ -79,6 +79,11 @@ Set `context` to `false` if you don't want the target to be affected by other sp
 Set `context` to any `String` values to define separate context for a target.
 **Default**: `true`
 
+#### shouldSpy: Boolean
+
+Set `shouldSpy` if you want to conditionally activate/deactivate the spy.
+**Default**: `true`
+
 ```html
 <div>
   <h1 v-vue-element-spy="{myCallback, context: 'titles'}">Title 1</h1>

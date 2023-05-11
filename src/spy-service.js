@@ -1,4 +1,5 @@
 const defaultConfig = {
+  shouldSpy: true,
   watchExit: false,
   offset: 0
 };
@@ -7,7 +8,7 @@ class SpyService {
   constructor() {
     this.refreshInterval = 250;
     this.refreshIntervalId = undefined;
-    
+
     this.globalContextKey = Symbol('global');
     this.noContextKey = Symbol('noContext');
 
@@ -103,12 +104,12 @@ class SpyService {
         }
       }
     });
-  
+
     if (toBeActive) toBeActive = toBeActive.item;
 
     context.forEach(item => {
       if (!item.active || toBeActive === item) return;
-  
+
       item.active = false;
       item.callback(false, item.el);
     });
