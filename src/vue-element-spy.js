@@ -7,6 +7,12 @@ function isShallowObjectMatch(a, b) {
     Object.keys(a).every(i => a[i] === b[i])
 }
 
+function checkValidOffset(options) {
+  if (!Object.hasOwn(options, 'offset')) return true
+  if (options.offset === undefined || options.offset === null) return false;
+  return !isNaN(Number(options.offset));
+}
+
 function setup(el, config) {
   spyService.setRefreshInterval();
 
@@ -76,13 +82,13 @@ function teardown(el) {
 const vueElementSpy = {
   inserted(el, {value}) {
     const config = SpyService.parseConfig(value);
-    if (config.shouldSpy) setup(el, config);
+    if (config.shouldSpy && checkValidOffset(value)) setup(el, config);
   },
   update(el, {value, oldValue}) {
     if (isShallowObjectMatch(value, oldValue)) return
     const config = SpyService.parseConfig(value);
     teardown(el);
-    if (config.shouldSpy) setup(el, config);
+    if (config.shouldSpy && checkValidOffset(value)) setup(el, config);
   },
   unbind(el) {
     teardown(el);
