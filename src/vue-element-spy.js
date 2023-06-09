@@ -8,7 +8,7 @@ function isShallowObjectMatch(a, b) {
 }
 
 function checkValidOffset(options) {
-  if (!Object.hasOwn(options, 'offset')) return true
+  if (!Object.prototype.hasOwnProperty.call(options, 'offset')) return true
   if (options.offset === undefined || options.offset === null) return false;
   return !isNaN(Number(options.offset));
 }
