@@ -37,7 +37,7 @@ function setup(el, config) {
   const anchor = document.createElement('div');
   anchor.style.cssText = 'width: 0; height: 0; display: block;';
   anchor.className = 'vue-element-spy-anchor';
-  el.parentElement.insertBefore(anchor, el);
+  el.prepend(anchor);
   target.anchor = anchor;
 
   topObserver.observe(anchor);
