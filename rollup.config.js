@@ -1,5 +1,4 @@
-import commonjs from '@rollup/plugin-commonjs'; 
-import buble from '@rollup/plugin-buble';
+import commonjs from '@rollup/plugin-commonjs';
 
 export default {
   input: 'src/vue-element-spy.js',
@@ -18,6 +17,5 @@ export default {
   }],
   plugins: [
     commonjs(),
-    buble({transforms: { forOf: false }})
   ],
 };
