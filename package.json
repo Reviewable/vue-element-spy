@@ -2,7 +2,7 @@
   "name": "vue-element-spy",
   "description": "Vue.js plugin for detecting when element reaches top of the viewport. The plugin uses Intersection Observer.",
   "version": "2.1.4",
-  "packageManager": "yarn@4.13.0",
+  "packageManager": "yarn@4.18.1",
   "scripts": {
     "update": "yarn up -R '*' && yarn dedupe --strategy highest",
     "latest": "yarn npm-check-updates -i -m --packageManager yarn --install never && yarn install",
